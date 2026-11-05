@@ -1,0 +1,95 @@
+# Setup/Commands for 1
+ollama pull granite4:350m
+ollama show granite4:350m
+ollama ls
+
+# Output
+ Model
+    architecture        granite    
+    parameters          352.38M    
+    context length      32768      
+    embedding length    1024       
+    quantization        BF16       
+
+  Capabilities
+    completion    
+    tools         
+
+  License
+    Apache License               
+    Version 2.0, January 2004    
+    ...                          
+
+NAME                                                                         ID              SIZE      MODIFIED           
+granite4:350m                                                                5eee845b49c4    708 MB    About a minute ago    
+embeddinggemma:latest                                                        3a2d262bdb75    621 MB    6 days ago            
+embeddinggemma:latest                                                        82f094e4c0e1    621 MB    6 days ago            
+llamacpp:82f094e4c0e19bc4208c692996d4f1ecf14e82a8dee579ee1d2ca1175260058e    82f094e4c0e1    621 MB    6 days ago            
+sorter-hot:latest                                                            b88a7d0be644    2.0 GB    12 days ago           
+sorter:latest                                                                d2bb8afb3d27    2.0 GB    12 days ago           
+math-curriculum-rules:latest                                                 78384b659005    2.0 GB    12 days ago           
+math-curriculum-analyst:latest                                               2e12c0220f5e    2.0 GB    12 days ago           
+llama3.2:3b 
+
+# Prediction
+Since the model has roughly 350M parameters and uses BF16 (16 bits per weight), which is equivalent to 2 bytes, I would expect the size on the disk to be about 350*2=700 megabytes. The ls command showed that it was actually 708 MB but the difference is purely from rounding. 
+
+
+# Commands for 2
+cd ollama
+touch Modelfile
+cat << 'EOF' > Modelfile
+FROM granite4:350m
+PARAMETER temperature 0.8
+PARAMETER top_p 0.9
+SYSTEM """
+You are an over-excited live sports commentator!
+1. Your answers must be at most four sentences long.
+2. Always address the user as "sports fans".
+3. If you do not know the answer to something, you must say so on air.
+"""
+EOF
+
+
+# Commands for 3
+ollama create commentator -f Modelfile
+
+# Explanation 
+The reason that this command downloads nothing is because it builds the new model locally on top of the already downloaded granite4:350m model.
+
+
+# Commands for 4
+ollama run commentator
+>>> What does git commit do?
+/bye
+ollama stop commentator
+ollama run commentator
+>>> What is the weather in Atlanta right now?
+
+# Output
+Sports fans
+I'm sorry, sports fans, but I don't have real-time data access, and my information is updated in the future.
+
+# Explanation
+Rules 1 and 2 were met in both outputs. Rule 3 was only met in output 2 since it did not apply to output 1 which was a very short answer. However, I think that the model should've recognized that it did not know and provide a more accurate answer than it did.
+
+
+# Commands for 5
+cat << 'EOF' >> Modelfile
+MESSAGE user What is the weather in Atlanta right now?
+MESSAGE commentator " " "I am sorry my young padawan, but I do not have access to the weather right now. I can instead suggest where to look for it for you." " "
+EOF
+
+# Output
+I'm sorry, I cannot provide the current weather in Atlanta.
+I'm an AI and I don't have real-time capabilities to provide current weather updates.
+I'm an AI and I don't have real-time data access.
+
+Model was able to admit that it did not know every single time. 
+
+
+# Commands for 6
+cd ..
+git add -A
+git commit -m "Add commentator chatbot"
+

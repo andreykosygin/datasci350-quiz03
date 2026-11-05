@@ -92,4 +92,57 @@ Model was able to admit that it did not know every single time.
 cd ..
 git add -A
 git commit -m "Add commentator chatbot"
+git push
 
+
+# Commands for 7
+python3 ollama/ask_local.py
+python3 ollama/ask_local.py
+
+# Output
+The command `git commit` is used to commit changes made to a Git repository. It creates a commit message and adds the changes to the Git history.
+CompletionUsage(completion_tokens=32, prompt_tokens=36, total_tokens=68, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cache_write_tokens=None, cached_tokens=0, image_tokens=None, text_tokens=None))
+
+Sports fans, I'm excited to explain what git commit does. It allows you to make changes to your code and commit them to the repository.
+CompletionUsage(completion_tokens=30, prompt_tokens=72, total_tokens=102, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cache_write_tokens=None, cached_tokens=3, image_tokens=None, text_tokens=None))
+
+# Explanation
+Commentator uses more tokens because of the built-in rules that it has to follow in terms of response structure which is why the prompt tokens double. 
+
+
+# Commands for 8
+python3 ollama/ask_json.py
+python3 ollama/ask_json.py
+git add -A
+git commit -m "Add python calls"
+git push origin main
+
+# Output
+"answer": "git commit is used to make a version control change
+length
+Traceback (most recent call last):
+  File "/Users/andreykosygin/datasci350-quiz03/datasci350-quiz03/ollama/ask_json.py", line 18, in <module>
+    print(json.loads(reply)["answer"])
+          ^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 2 column 11 (char 12)
+
+{
+"answer": "git commit is used to make a version control change to a file in a version control system like Git.",
+"confidence": "high" }
+stop
+git commit is used to make a version control change to a file in a version control system like Git.
+
+# Explanation
+The max_tokens was set to only 15 which is not enough for the model to produce a reasonable output and causes the error. 
+
+
+## Commands for 9

@@ -85,6 +85,7 @@ I'm sorry, I cannot provide the current weather in Atlanta.
 I'm an AI and I don't have real-time capabilities to provide current weather updates.
 I'm an AI and I don't have real-time data access.
 
+# Explanation
 Model was able to admit that it did not know every single time. 
 
 
@@ -145,4 +146,44 @@ git commit is used to make a version control change to a file in a version contr
 The max_tokens was set to only 15 which is not enough for the model to produce a reasonable output and causes the error. 
 
 
-## Commands for 9
+## Commands for 10
+chmod 400 ~/Downloads/quiz03.pem   
+ssh -i ~/Downloads/quiz03.pem ubuntu@ec2-3-145-26-124.us-east-2.compute.amazonaws.com
+
+# Output
+The authenticity of host 'ec2-3-145-26-124.us-east-2.compute.amazonaws.com (3.145.26.124)' can't be established.
+ED25519 key fingerprint is: SHA256:ME8Cf/z/NvBGwMS+GOraCr1heyMyhAyh0hNLl6xPS3c
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+
+
+# Commands for 11
+sudo apt update
+sudo apt install -y python3-pandas python3-matplotlib python3-seaborn
+
+
+# Commands for 12
+scp -i ~/Downloads/quiz03.pem aws/traffic_analysis.py aws/website_traffic.txt ubuntu@ec2-3-145-26-124.us-east-2.compute.amazonaws.com:~/
+
+
+# Commands for 13
+python3 traffic_analysis.py > results.txt
+cat /var/lib/cloud/data/instance-id >> results.txt
+sha256sum results.txt > fingerprint.txt
+
+
+# Commands for 14
+scp -i ~/Downloads/quiz03.pem ubuntu@ec2-3-145-26-124.us-east-2.compute.amazonaws.com:~/results.txt ubuntu@ec2-3-145-26-124.us-east-2.compute.amazonaws.com:~/fingerprint.txt ubuntu@ec2-3-145-26-124.us-east-2.compute.amazonaws.com:~/traffic_analysis.png aws/
+
+
+# Commands for 15
+git add -A
+git commit -m "Add AWS Analysis Results"
+git push origin main
+
+# Explanation for 15
+When you stop an instance rather than terminating, you are still charged for storage in the instance.
+
+
+# Notes on AI
+No AI usage. The only resource are used were the lecture notes for Tasks 2 and 5 primarily to ensure that my modelfile was setup correctly. 
